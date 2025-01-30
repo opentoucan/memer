@@ -1,0 +1,18 @@
+repos:
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        require_serial: true
+        args:
+          [
+            "-rn", # Only display messages
+            "-sn", # Don't display the score
+          ]
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.393
+    hooks:
+    - id: pyright

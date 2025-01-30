@@ -23,7 +23,11 @@
     targetPkgs = pkgs: (with pkgs; [
       gcc
       glibc
-      python3.pkgs.pytest
+      go-task
+      pre-commit
     ]);
     runScript = "fish";
+    shellHook = ''
+        direnv allow
+    '';
 }).env
