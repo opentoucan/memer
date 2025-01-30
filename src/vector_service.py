@@ -1,4 +1,5 @@
 """Module for persisting vectors to the database"""
+
 from os import environ
 from numpy import ndarray
 from qdrant_client import QdrantClient
@@ -13,6 +14,7 @@ if not vector_client.collection_exists(collection_name="memes"):
         vectors_config={"image": VectorParams(size=512, distance=Distance.COSINE)},
     )
 
+
 def query_vectors(vectors: ndarray) -> QueryResponse:
     """Retrieves nearest vectors above threshold"""
     return vector_client.query_points(
@@ -20,11 +22,12 @@ def query_vectors(vectors: ndarray) -> QueryResponse:
         using="image",
         query=vectors,
         score_threshold=0.95,
-        limit=50)
+        limit=50,
+    )
+
 
 def upload_vectors(vectors: ndarray, meme: Meme) -> None:
     """Uploads vectors to database"""
     vector_client.upload_collection(
-        collection_name="memes",
-        vectors={"image": vectors},
-        payload=[meme.model_dump()])
+        collection_name="memes", vectors={"image": vectors}, payload=[meme.model_dump()]
+    )

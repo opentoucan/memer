@@ -1,4 +1,5 @@
 """Module for handling"""
+
 import base64
 import io
 import json
@@ -15,6 +16,7 @@ from meme import Meme
 from meme_posted_event import MemePosted
 from repost_event import RepostEvent, Link
 
+
 @broker.subscriber("meme-posted-queue")
 async def handle(logger: Logger, body: str):
     """Handle method for meme posted events"""
@@ -29,17 +31,21 @@ async def handle(logger: Logger, body: str):
     repost_meme_links = []
     for point in points.points:
         duplicate_meme = Meme(**json.loads(point.model_dump_json()))
-        repost_meme_links.append(Link(
-            guild_id=duplicate_meme.guild_id,
-            channel_id=duplicate_meme.channel_id,
-            message_id=duplicate_meme.message_id))
+        repost_meme_links.append(
+            Link(
+                guild_id=duplicate_meme.guild_id,
+                channel_id=duplicate_meme.channel_id,
+                message_id=duplicate_meme.message_id,
+            )
+        )
 
     meme = Meme(
         sender=meme_posted.sender,
         timestamp=dt.now().strftime("%m/%d/%Y %I:%M:%S %p"),
         guild_id=meme_posted.guild_id,
         channel_id=meme_posted.channel_id,
-        message_id=meme_posted.message_id)
+        message_id=meme_posted.message_id,
+    )
 
     vector_service.upload_vectors(vectors[0], meme)
 
@@ -48,11 +54,12 @@ async def handle(logger: Logger, body: str):
         return
 
     template = repost_response.generate_image(
-                        username=meme_posted.sender,
-                        colour=meme_posted.name_colour,
-                        timestamp=dt.now(),
-                        avatar=avatar,
-                        meme=meme_image)
+        username=meme_posted.sender,
+        colour=meme_posted.name_colour,
+        timestamp=dt.now(),
+        avatar=avatar,
+        meme=meme_image,
+    )
 
     image_bytes = io.BytesIO()
     template.save(image_bytes)
@@ -60,7 +67,8 @@ async def handle(logger: Logger, body: str):
     repose_event = RepostEvent(
         channel_id=meme_posted.channel_id,
         reply_image=image_bytes.getvalue(),
-        links=repost_meme_links)
+        links=repost_meme_links,
+    )
 
     message = json.dumps(repose_event, default=pydantic_encoder)
     # Fan out exchange so the routing key shouldn't be used
