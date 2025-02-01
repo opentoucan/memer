@@ -1,19 +1,11 @@
 """Module for starting the application"""
 
-import os
 import asyncio
 from faststream import FastStream
-from faststream.security import SASLPlaintext
-from faststream.rabbit import RabbitBroker, RabbitQueue, RabbitExchange
+from faststream.rabbit import RabbitQueue, RabbitExchange, ExchangeType
+from broker import broker
+import meme_posted_event_handler  # noqa: F401
 
-broker = RabbitBroker(
-    host=os.environ.get("RABBITMQ_HOST", "localhost"),
-    port=int(os.environ.get("RABBITMQ_PORT", 5672)),
-    security=SASLPlaintext(
-        username=os.environ.get("RABBITMQ_USER", "guest"),
-        password=os.environ.get("RABBITMQ_PASSWORD", "guest"),
-    ),
-)
 
 app = FastStream(broker)
 
@@ -30,5 +22,22 @@ if __name__ == "__main__":
 @app.after_startup
 async def after_startup():
     """Post startup callback for rabbitmq queue and exchange creation"""
-    await broker.declare_queue(RabbitQueue(name="meme-posted-queue", durable=True))
-    await broker.declare_exchange(RabbitExchange(name="repost-exchange", durable=True))
+    print("Starting RabbitMQ Exchange")
+    meme_posted_queue = await broker.declare_queue(
+        RabbitQueue(name="meme-posted-queue", durable=True)
+    )
+    meme_posted_exchange = await broker.declare_exchange(
+        RabbitExchange("meme-posted-exchange", durable=True, type=ExchangeType.TOPIC)
+    )
+    await broker.declare_exchange(
+        RabbitExchange(
+            name="meme-repost-exchange",
+            durable=True,
+            type=ExchangeType.TOPIC,
+            routing_key="meme-repost-exchange",
+        )
+    )
+    await meme_posted_queue.bind(
+        exchange=meme_posted_exchange,
+        routing_key=meme_posted_queue.name,  # Optional parameter
+    )

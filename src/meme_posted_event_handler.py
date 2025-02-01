@@ -6,22 +6,32 @@ import json
 from io import BytesIO
 from datetime import datetime as dt
 from faststream import Logger
+from faststream.rabbit import RabbitQueue
+from faststream.rabbit import RabbitExchange
+from faststream.rabbit import ExchangeType
+
 from PIL import Image
-from pydantic.v1.json import pydantic_encoder
 import clip_service
 import repost_response
 import vector_service
-from main import broker
+from broker import broker
 from meme import Meme
 from meme_posted_event import MemePosted
 from repost_event import RepostEvent, Link
 
 
-@broker.subscriber("meme-posted-queue")
+@broker.subscriber(
+    RabbitQueue(name="meme-posted-queue", durable=True),
+    exchange=RabbitExchange(
+        "meme-posted-exchange", durable=True, type=ExchangeType.TOPIC
+    ),
+)
 async def handle(logger: Logger, body: str):
     """Handle method for meme posted events"""
-    logger.info(f"Received meme-posted-event: {body}")
     meme_posted = MemePosted(**json.loads(body))
+    logger.info(
+        f"Received meme-posted-event:{meme_posted.model_dump_json(exclude={'meme', 'avatar'})}"
+    )
     avatar: Image.Image = Image.open(BytesIO(base64.b64decode(meme_posted.avatar)))
     meme_image: Image.Image = Image.open(BytesIO(base64.b64decode(meme_posted.meme)))
 
@@ -30,12 +40,16 @@ async def handle(logger: Logger, body: str):
 
     repost_meme_links = []
     for point in points.points:
-        duplicate_meme = Meme(**json.loads(point.model_dump_json()))
+        point_model = point.model_dump()
+
+        print(point_model["payload"])
+
         repost_meme_links.append(
             Link(
-                guild_id=duplicate_meme.guild_id,
-                channel_id=duplicate_meme.channel_id,
-                message_id=duplicate_meme.message_id,
+                guild_id=point_model["payload"]["guild_id"],
+                channel_id=point_model["payload"]["channel_id"],
+                message_id=point_model["payload"]["message_id"],
+                score=point_model["score"],
             )
         )
 
@@ -47,7 +61,7 @@ async def handle(logger: Logger, body: str):
         message_id=meme_posted.message_id,
     )
 
-    vector_service.upload_vectors(vectors[0], meme)
+    vector_service.upload_vectors(vectors, meme)
 
     if len(repost_meme_links) <= 0:
         print("No duplicate memes found")
@@ -62,14 +76,19 @@ async def handle(logger: Logger, body: str):
     )
 
     image_bytes = io.BytesIO()
-    template.save(image_bytes)
-
-    repose_event = RepostEvent(
+    template.save(image_bytes, format=template.format)
+    repost_event = RepostEvent(
         channel_id=meme_posted.channel_id,
-        reply_image=image_bytes.getvalue(),
+        guild_id=meme_posted.guild_id,
+        reply_image=base64.b64encode(image_bytes.getvalue()),
         links=repost_meme_links,
     )
 
-    message = json.dumps(repose_event, default=pydantic_encoder)
     # Fan out exchange so the routing key shouldn't be used
-    await broker.publish(message, exchange="repost-exchange")
+    await broker.publish(
+        repost_event.model_dump_json(),
+        exchange=RabbitExchange(
+            name="meme-repost-exchange", durable=True, type=ExchangeType.TOPIC
+        ),
+        routing_key="meme-repost-exchange",
+    )

@@ -20,14 +20,14 @@ def generate_image(
         template_offset, (avatar_size[0] + 35, thumbnail_spacing_buffer[1])
     )
 
-    avatar = avatar.resize(avatar_size)
+    avatar = avatar.resize(avatar_size).convert("RGBA")
     scaled_size = (avatar.size[0] * 3, avatar.size[1] * 3)
     mask = Image.new("L", scaled_size, 0)
     ImageDraw.Draw(mask).ellipse((0, 0) + scaled_size, fill=255)
     mask = mask.resize(avatar.size, resample=Image.Resampling.LANCZOS)
     avatar.putalpha(mask)
 
-    thumbnail = ImageOps.fit(avatar, mask.size, centering=(0.5, 0.5))
+    thumbnail = ImageOps.fit(avatar, mask.size, centering=(0.5, 0.5)).convert("RGBA")
     thumbnail.putalpha(mask)
     template = Image.open("./resources/images/template.png")
 
