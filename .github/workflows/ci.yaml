@@ -1,0 +1,49 @@
+name: ci
+on:
+  push:
+    branches: [ 'main', 'release' ]
+    paths-ignore:
+      - '.github/**'
+      - 'docs/**'
+      - '**.md'
+  pull_request:
+    branches: [ 'main', 'release' ]
+    paths-ignore:
+      - '.github/**'
+      - 'docs/**'
+      - '**.md'
+jobs:
+  lint:
+    name: python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
+      - name: lint
+        run: uvx ruff@0.9.4 check
+      - name: static typing check
+        run: uvx pyright@1.1.393
+  tests:
+    name: python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
+      - name: tests
+        run: uvx pytest@8.3.4
