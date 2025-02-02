@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+env:
+  HANDSDOWN_VERSION: 2.1.0
+  RUFF_VERSION: 0.9.4
+  PYRIGHT_VERSION: 1.1.393
+
+tasks:
+  docs:
+    desc: Generate docs with Handsdown
+    cmds:
+      - uvx handsdown@${HANDSDOWN_VERSION}
+  lint:
+    desc: Runs linter with ruff
+    cmds:
+      - uvx ruff@${RUFF_VERSION} check
+      - uvx ruff@${RUFF_VERSION} format
+  type:
+    desc: Runs static type check
+    cmds:
+      - uvx pyright@${PYRIGHT_VERSION}
