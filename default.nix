@@ -4,6 +4,7 @@
     targetPkgs = pkgs: (with pkgs; [
       gcc
       glibc
+      zlib
       go-task
       pre-commit
     ]);
