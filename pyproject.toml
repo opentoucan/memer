@@ -3,6 +3,7 @@ name = "meme-service"
 version = "0.1.0"
 description = "Checks for reposts"
 readme = "README.md"
+requires-python = "==3.12.0"
 dependencies = [
     "clip",
     "faststream==0.5.34",
@@ -13,24 +14,23 @@ dependencies = [
     "qdrant-client==1.13.2",
     "regex==2024.11.6",
     "aio-pika==9.5.4",
-    "torch==2.6.0",
-    "torchvision==0.21.0",
+    "torch==2.5.1",
+    "torchvision==0.20.1",
     "tqdm==4.67.1",
 ]
 
 [dependency-groups]
 dev = [
-  "pytest",
-  "ruff"
+  "pytest==8.3.4"
 ]
 [tool.uv.sources]
 torch = [
     { index = "pytorch-cpu" },
 ]
-clip = { git = "https://github.com/openai/CLIP.git" }
 torchvision = [
     { index = "pytorch-cpu" },
 ]
+clip = { git = "https://github.com/openai/CLIP.git" }
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
