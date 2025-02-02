@@ -1,7 +1,13 @@
 """Module to build image from template"""
 
-from datetime import datetime, timedelta
-from PIL import Image, ImageOps, ImageFont, ImageDraw, ImageColor
+from pathlib import Path
+from datetime import datetime
+from datetime import timedelta
+from PIL import Image
+from PIL import ImageOps
+from PIL import ImageFont
+from PIL import ImageDraw
+from PIL import ImageColor
 
 
 def generate_image(
@@ -29,12 +35,16 @@ def generate_image(
 
     thumbnail = ImageOps.fit(avatar, mask.size, centering=(0.5, 0.5)).convert("RGBA")
     thumbnail.putalpha(mask)
-    template = Image.open("./resources/images/template.png")
+    template = Image.open(
+        Path(__file__).parent.parent / "resources" / "images" / "template.png"
+    )
 
     template.paste(
         thumbnail, concat_tuples(template_offset, thumbnail_spacing_buffer), thumbnail
     )
-    username_font = ImageFont.truetype("./resources/fonts/whitney-medium.ttf", 16)
+    username_font = ImageFont.truetype(
+        Path(__file__).parent.parent / "resources" / "fonts" / "whitney-medium.ttf", 16
+    )
     username_text = username[:20] + (username[20:] and "...")
 
     ImageDraw.Draw(template).text(
