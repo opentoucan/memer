@@ -1,16 +1,37 @@
-FROM docker.io/python:3.13.1
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+ARG UV_DEBIAN=ghcr.io/astral-sh/uv:python3.12-bookworm
+ARG PYTHON_SLIM=docker.io/python:3.12
+
+FROM ${UV_DEBIAN} as builder
+
 RUN apt-get upgrade && apt-get install -y --no-install-recommends \
-    curl \
     ca-certificates \
     gcc \
     libc6 \
     git
 
-WORKDIR /usr/src/app
-COPY pyproject.toml .
-COPY uv.lock .
-COPY ./src/* .
-RUN uv sync --no-dev
+WORKDIR /app
 
-CMD ["uv", "run", "main.py"]
+# Enable bytecode compilation
+ENV UV_COMPILE_BYTECODE=1
+# Copy from the cache instead of linking since it's a mounted volume
+ENV UV_LINK_MODE=copy
+
+# Install the project's dependencies using the lockfile and settings
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-install-project --no-dev
+
+# Then, add the rest of the project source code and install it
+# Installing separately from its dependencies allows optimal layer caching
+ADD . /app
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
+
+FROM ${PYTHON_SLIM} as final
+
+COPY --from=builder --chown=2048:2048 /app /app
+ENV PATH="/app/.venv/bin:$PATH"
+WORKDIR /app
+USER 2048
+CMD [ "python", "src/main.py" ]
