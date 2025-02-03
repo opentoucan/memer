@@ -53,6 +53,6 @@ jobs:
       - name: Download pre-trained models
         run: |
           chmod +x scripts/download-models.sh
-          ./download-models.sh
+          ./scripts/download-models.sh
       - name: tests
         run: uv run pytest
