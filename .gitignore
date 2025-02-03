@@ -2,5 +2,5 @@
 .idea
 .pytest_cache
 .ruff_cache
-resources/models/**
-**/__pycache__
+resources/models
+__pycache__
