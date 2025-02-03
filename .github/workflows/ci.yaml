@@ -50,5 +50,9 @@ jobs:
           python-version-file: "pyproject.toml"
       - name: Install deps
         run: uv sync
+      - name: Download pre-trained models
+        run: |
+          chmod +x scripts/download-models.sh
+          ./download-models.sh
       - name: tests
         run: uv run pytest

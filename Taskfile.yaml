@@ -8,7 +8,6 @@ shopt: [globstar]
 includes:
   precommit: .taskfiles/precommit
   uv: .taskfiles/uv
-  models: .taskfiles/models
 
 tasks:
 
