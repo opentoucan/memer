@@ -3,7 +3,7 @@ ARG PYTHON_SLIM=docker.io/python:3.12
 
 FROM ${UV_DEBIAN} as builder
 
-RUN apt-get upgrade && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     gcc \
     libc6 \
@@ -26,12 +26,14 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Installing separately from its dependencies allows optimal layer caching
 ADD . /app
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-dev
+    uv sync --frozen --no-dev --no-editable
 
 FROM ${PYTHON_SLIM} as final
 
 COPY --from=builder --chown=2048:2048 /app /app
+
 ENV PATH="/app/.venv/bin:$PATH"
 WORKDIR /app
+
 USER 2048
-CMD [ "python", "src/main.py" ]
+ENTRYPOINT [ "python", "src/main.py" ]
