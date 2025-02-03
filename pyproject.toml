@@ -1,6 +1,6 @@
 [project]
-name = "meme-service"
-version = "0.1.0"
+name = "memer"
+version = "0.1.1"
 description = "Checks for reposts"
 readme = "README.md"
 requires-python = ">=3.12.0"
