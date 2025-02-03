@@ -50,4 +50,4 @@ jobs:
       - name: Install deps
         run: uv sync
       - name: tests
-        run: uvx pytest@8.3.4
+        run: pytest
