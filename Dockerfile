@@ -23,13 +23,16 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --frozen --no-install-project --no-dev
 
+
+ADD . /app
+
+# Download pre-trained models
+COPY ./scripts /scripts
+RUN chmod +x /scripts/download-models.sh
+RUN /scripts/download-models.sh
+
 # Then, add the rest of the project source code and install it
 # Installing separately from its dependencies allows optimal layer caching
-ADD . /app
-RUN curl -L https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt \
-    --create-dirs \
-    -o /app/resources/models/ViT-B-32.pt
-
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-editable
 
