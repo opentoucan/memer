@@ -1,5 +1,5 @@
-# Meme-service Index
+# Memer Index
 
 > Auto-generated documentation index.
 
-A full list of `Meme-service` project modules.
+A full list of `Memer` project modules.
