@@ -7,7 +7,10 @@ from qdrant_client.http.models import QueryResponse
 from qdrant_client.models import Distance, VectorParams
 from meme import Meme
 
-vector_client = QdrantClient(environ.get("QDRANT_URL", ":memory:"))
+vector_client = QdrantClient(
+    location=environ.get("QDRANT_URL", ":memory:"),
+    api_key=environ.get("QDRANT_API_KEY", None),
+)
 if not vector_client.collection_exists(collection_name="memes"):
     vector_client.create_collection(
         collection_name="memes",
