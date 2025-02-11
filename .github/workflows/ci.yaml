@@ -18,7 +18,7 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
@@ -31,14 +31,14 @@ jobs:
       - name: Install deps
         run: uv sync
       - name: lint
-        run: uvx ruff@0.9.4 check
+        run: uvx ruff@latest check
       - name: static typing check
-        run: uvx pyright@1.1.393
+        run: uvx pyright@latest
   tests:
     name: tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
@@ -62,10 +62,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
 
       - name: Build and push Docker image
         id: build-and-push
-        uses: docker/build-push-action@v6.13.0
+        uses: docker/build-push-action@v6
         with:
           push: false
