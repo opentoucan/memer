@@ -13,7 +13,7 @@ def test_repost_response_is_not_null():
         colour="#EEEEEE",
         timestamp=dt.now(),
         avatar=Image.open("./tests/data/avatar.png"),
-        meme=Image.open("./tests/data/meme.png"),
+        meme=Image.open("./tests/data/meme.jpg"),
     )
 
     assert response is not None
