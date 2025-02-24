@@ -1,9 +1,7 @@
 ARG UV_DEBIAN=ghcr.io/astral-sh/uv:python3.12-bookworm
 ARG PYTHON_SLIM=docker.io/python:3.12
-ARG MODEL=ViT-B/32
 
 FROM ${UV_DEBIAN} as builder
-ARG MODEL
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -11,6 +9,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libc6 \
     git \
     curl
+
+RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && \
+    chmod +x /usr/bin/yq
 
 WORKDIR /app
 
@@ -30,8 +31,8 @@ ADD . /app
 
 # Download pre-trained models
 COPY ./scripts /scripts
-RUN chmod +x /scripts/download-models.sh
-RUN /scripts/download-models.sh $MODEL
+RUN chmod +x /scripts/download-model.sh
+RUN /scripts/download-model.sh
 
 # Then, add the rest of the project source code and install it
 # Installing separately from its dependencies allows optimal layer caching
