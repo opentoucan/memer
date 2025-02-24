@@ -12,7 +12,7 @@ vector_client = QdrantClient(
     api_key=environ.get("QDRANT_API_KEY", None),
 )
 
-threshold = environ.get("THRESHOLD", 0.96) is float
+threshold = environ.get("THRESHOLD", 0.955)
 
 if not vector_client.collection_exists(collection_name="memes"):
     vector_client.create_collection(
@@ -27,7 +27,7 @@ def query_vectors(vectors: ndarray) -> QueryResponse:
         collection_name="memes",
         using="image",
         query=vectors,
-        score_threshold=threshold,
+        score_threshold=float(threshold),
         limit=50,
     )
 
