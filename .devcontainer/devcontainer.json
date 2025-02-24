@@ -1,0 +1,14 @@
+{
+	"name": "workspace",
+	"dockerComposeFile": ["compose.yaml"],
+  "service": "workspace",
+	"workspaceFolder": "/workspace",
+
+	"shutdownAction": "stopCompose",
+	"containerUser": "vscode",
+	"remoteUser": "vscode",
+	"updateRemoteUserUID": true,
+	"containerEnv": {
+	  "HOME": "/home/vscode"
+	}
+}
