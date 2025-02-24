@@ -6,12 +6,13 @@ import torch
 import clip
 from PIL.Image import Image
 
+MODEL = "ViT-B-32.pt"
 
 def get_vectors(image: Image) -> numpy.ndarray:
     """Generates vectors for a pillow image"""
     device = "cpu"
     model, preprocess = clip.load(
-        str(Path(__file__).parent.parent / "resources" / "models" / "ViT-B-32.pt"),
+        str(Path(__file__).parent.parent / "resources" / "models" / MODEL),
         device=device,
     )
     image = (

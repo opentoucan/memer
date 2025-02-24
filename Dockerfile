@@ -1,7 +1,9 @@
 ARG UV_DEBIAN=ghcr.io/astral-sh/uv:python3.12-bookworm
 ARG PYTHON_SLIM=docker.io/python:3.12
+ARG MODEL=ViT-B/32
 
 FROM ${UV_DEBIAN} as builder
+ARG MODEL
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -29,7 +31,7 @@ ADD . /app
 # Download pre-trained models
 COPY ./scripts /scripts
 RUN chmod +x /scripts/download-models.sh
-RUN /scripts/download-models.sh
+RUN /scripts/download-models.sh $MODEL
 
 # Then, add the rest of the project source code and install it
 # Installing separately from its dependencies allows optimal layer caching
