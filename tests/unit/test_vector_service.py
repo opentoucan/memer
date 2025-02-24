@@ -75,4 +75,4 @@ def test_similar_memes_are_returned_a_score():
     response = vector_service.query_vectors(vectors_2[0])
 
     # Assert
-    assert response.points is not []
+    assert response.points != []
