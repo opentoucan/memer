@@ -12,7 +12,6 @@ class Settings(BaseSettings):
     """Load from custom toml header in pyproject.toml"""
 
     repost_threshold: float
-    filename: str
     name: str
 
     @classmethod
