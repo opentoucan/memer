@@ -6,13 +6,12 @@ from qdrant_client import QdrantClient
 from qdrant_client.http.models import QueryResponse
 from qdrant_client.models import Distance, VectorParams
 from meme import Meme
+import config
 
 vector_client = QdrantClient(
     location=environ.get("QDRANT_URL", ":memory:"),
     api_key=environ.get("QDRANT_API_KEY", None),
 )
-
-threshold = environ.get("THRESHOLD", 0.955)
 
 if not vector_client.collection_exists(collection_name="memes"):
     vector_client.create_collection(
@@ -23,11 +22,12 @@ if not vector_client.collection_exists(collection_name="memes"):
 
 def query_vectors(vectors: ndarray) -> QueryResponse:
     """Retrieves nearest vectors above threshold"""
+    settings = config.Settings() # type: ignore
     return vector_client.query_points(
         collection_name="memes",
         using="image",
         query=vectors,
-        score_threshold=float(threshold),
+        score_threshold=float(settings.repost_threshold),
         limit=50,
     )
 

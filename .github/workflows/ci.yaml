@@ -52,8 +52,8 @@ jobs:
         run: uv sync
       - name: Download pre-trained models
         run: |
-          chmod +x scripts/download-models.sh
-          ./scripts/download-models.sh
+          chmod +x scripts/download-model.sh
+          ./scripts/download-model.sh
       - name: tests
         run: uv run pytest
 

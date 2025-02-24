@@ -17,6 +17,7 @@ dependencies = [
     "torch==2.6.0",
     "torchvision==0.21.0",
     "tqdm==4.67.1",
+    "pydantic-settings>=2.8.0",
 ]
 
 [dependency-groups]
@@ -46,3 +47,7 @@ pythonpath = [
 # ...
 venvPath = "."
 venv = ".venv"
+
+[app.model]
+name = "ViT-B/32"
+repost_threshold=0.955
