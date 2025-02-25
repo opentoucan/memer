@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     libc6 \
     git \
-    curl
+    curl \
+    jq
 
 RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && \
     chmod +x /usr/bin/yq
