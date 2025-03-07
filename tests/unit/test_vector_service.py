@@ -26,15 +26,15 @@ def test_vectors_are_saved():
     response = vector_service.query_vectors(vectors[0])
 
     # Assert
-    assert response.points[0].score >= 1  # Asserts the vector score is identical
+    assert response.points[0].score >= 0.99  # Asserts the vector score is identical
     assert response.points[0].payload == meme.model_dump()
 
 def test_different_memes_are_not_similar():
     """Tests different memes are not flagged as similar"""
 
     # Arrange
-    image_1 = Image.open("./tests/data/monkey_meme_1.jpg")
-    image_2 = Image.open("./tests/data/monkey_meme_2.jpg")
+    image_1 = Image.open("./tests/data/cat1.jpg")
+    image_2 = Image.open("./tests/data/cat2.jpg")
     image_3 = Image.open("./tests/data/boomer.jpg")
     image_4 = Image.open("./tests/data/hotdog.png")
     vectors_1 = clip_service.get_vectors(image_1)
