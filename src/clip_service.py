@@ -20,4 +20,4 @@ def get_vectors(image: Image) -> numpy.ndarray:
     )
     with torch.no_grad():
         image_features = model.encode_image(image)
-        return image_features.softmax(dim=-1).cpu().numpy()
+        return image_features.detach().cpu().numpy()
