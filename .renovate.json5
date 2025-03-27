@@ -1,0 +1,20 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "local>opentoucan/renovate-config",
+  ],
+  packageRules: [
+    {
+      matchManagers: ["python-version"],
+      semanticCommitScope: "python",
+      commitMessageTopic: "python {{depName}}",
+      addLabels: ["renovate/python"]
+    },
+    {
+      matchDatasources: ["pypi"],
+      semanticCommitScope: "pypi",
+      commitMessageTopic: "pypi {{depName}}",
+      addLabels: ["renovate/pypi"]
+    }
+  ]
+}
