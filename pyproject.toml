@@ -18,6 +18,7 @@ dependencies = [
     "torchvision==0.21.0",
     "tqdm==4.67.1",
     "pydantic-settings>=2.8.0",
+    "sentence-transformers==3.4.1"
 ]
 
 [dependency-groups]
@@ -39,6 +40,9 @@ url = "https://download.pytorch.org/whl/cpu"
 explicit = true
 
 [tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
 pythonpath = [
   "src"
 ]
@@ -50,4 +54,4 @@ venv = ".venv"
 
 [app.model]
 name = "ViT-B/32"
-repost_threshold=0.955
+repost_threshold=0.95
