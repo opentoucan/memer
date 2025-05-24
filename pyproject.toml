@@ -14,7 +14,7 @@ dependencies = [
     "qdrant-client==1.13.2",
     "regex==2024.11.6",
     "aio-pika==9.5.4",
-    "torch==2.6.0",
+    "torch==2.7.0",
     "torchvision==0.21.0",
     "tqdm==4.67.1",
     "pydantic-settings>=2.8.0",
