@@ -11,10 +11,10 @@
       addLabels: ["renovate/python"]
     },
     {
-      matchDatasources: ["pypi"],
-      semanticCommitScope: "pypi",
-      commitMessageTopic: "pypi {{depName}}",
-      addLabels: ["renovate/pypi"]
+      matchManagers: ["pep621"]
+      semanticCommitScope: "pyproject",
+      commitMessageTopic: "pyproject {{depName}}",
+      addLabels: ["renovate/pyproject"]
     }
   ]
 }
