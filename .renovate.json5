@@ -11,7 +11,7 @@
       addLabels: ["renovate/python"]
     },
     {
-      matchManagers: ["pep621"]
+      matchManagers: ["pep621"],
       semanticCommitScope: "pyproject",
       commitMessageTopic: "pyproject {{depName}}",
       addLabels: ["renovate/pyproject"]
