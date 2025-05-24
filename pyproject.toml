@@ -15,7 +15,7 @@ dependencies = [
     "regex==2024.11.6",
     "aio-pika==9.5.4",
     "torch==2.6.0",
-    "torchvision==0.21.0",
+    "torchvision==0.22.0",
     "tqdm==4.67.1",
     "pydantic-settings>=2.8.0",
     "sentence-transformers==3.4.1"
