@@ -15,6 +15,15 @@
       semanticCommitScope: "pypi",
       commitMessageTopic: "pypi {{depName}}",
       addLabels: ["renovate/pypi"]
+    },
+    {
+      description: ["Group torch packages"],
+      matchPackageNames: ["/^torch/"],
+      matchDatasources: ["pypi"],
+      groupName: "torch",
+      group: {
+        commitMessageTopic: "{{{groupName}}} group"
+      }
     }
   ]
 }
