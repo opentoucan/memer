@@ -5,10 +5,10 @@
   ],
   packageRules: [
     {
-      matchManagers: ["python-version"],
+      matchManagers: ["pyenv"],
       semanticCommitScope: "python",
       commitMessageTopic: "python {{depName}}",
-      addLabels: ["renovate/python"]
+      addLabels: ["renovate/python-version"]
     },
     {
       matchManagers: ["pep621"],

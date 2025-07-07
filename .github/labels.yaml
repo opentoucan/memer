@@ -3,11 +3,13 @@
 - name: renovate/container
   color: "027fa0"
 - name: renovate/github-action
-  color: "027fa0"
+  color: "0e8a16"
 - name: renovate/github-release
-  color: "027fa0"
+  color: "0e8a16"
 - name: renovate/pypi
-  color: "5319E7"
+  color: "0efa10"
+- name: renovate/python-version
+  color: "003300"
 # Semantic Types
 - name: type/digest
   color: "ffeC19"
