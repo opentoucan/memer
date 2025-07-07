@@ -152,16 +152,16 @@ wheels = [
 
 [[package]]
 name = "faststream"
-version = "0.5.42"
+version = "0.5.44"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
     { name = "fast-depends" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/57/d0/dc00fcdb5cfc128cf6305f9b9aa2cf8bc76333d2042fb2e36c45c1a600ba/faststream-0.5.42.tar.gz", hash = "sha256:7f115dc4c9eb53a76a5ee1194191179f8161ed678ad0cb744ace2743bfd5002e", size = 296482, upload-time = "2025-05-22T18:49:46.542Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/40/36/8378c4f263d3b2ed566427165d4c90659fe6cdcde3ea1c6e4fb2d4345d01/faststream-0.5.44.tar.gz", hash = "sha256:066fa17823e78c88f4ae6f84080b9b32a097a8354d7e85c67fe7b17e36508ad3", size = 300598, upload-time = "2025-07-04T04:59:39.501Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ee/e1/51f479c153990b3ad2625e0191fbc0ce4fea016c0c65f6ffc464bb980d18/faststream-0.5.42-py3-none-any.whl", hash = "sha256:dbbbbca36bc22ac017c0cca2acffb81dc6569c1813055367bf7acd6c46c6cbb9", size = 396869, upload-time = "2025-05-22T18:49:44.354Z" },
+    { url = "https://files.pythonhosted.org/packages/5a/ef/bdcce44b2e10654a43b6a05033c44b99d9bf1c2ce838dc05380edbd6d5f8/faststream-0.5.44-py3-none-any.whl", hash = "sha256:103267a5551799bcce5c9e20f24f8a440cdce4d2c83fb7ba762167a070fe5cab", size = 401684, upload-time = "2025-07-04T04:59:37.675Z" },
 ]
 
 [[package]]
@@ -420,7 +420,7 @@ dev = [
 requires-dist = [
     { name = "aio-pika", specifier = "==9.5.5" },
     { name = "clip", git = "https://github.com/openai/CLIP.git" },
-    { name = "faststream", specifier = "==0.5.42" },
+    { name = "faststream", specifier = "==0.5.44" },
     { name = "ftfy", specifier = "==6.3.1" },
     { name = "packaging", specifier = "==25.0" },
     { name = "pillow", specifier = "==11.3.0" },
