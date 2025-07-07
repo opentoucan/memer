@@ -9,7 +9,7 @@ dependencies = [
     "faststream==0.5.42",
     "ftfy==6.3.1",
     "packaging==24.2",
-    "pillow==11.1.0",
+    "pillow==11.2.1",
     "pydantic==2.10.6",
     "qdrant-client==1.13.2",
     "regex==2024.11.6",
