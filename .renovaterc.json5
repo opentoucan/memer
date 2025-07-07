@@ -12,9 +12,9 @@
     },
     {
       matchManagers: ["pep621"],
-      semanticCommitScope: "pyproject",
-      commitMessageTopic: "pyproject {{depName}}",
-      addLabels: ["renovate/pyproject"]
+      semanticCommitScope: "pypi",
+      commitMessageTopic: "pypi {{depName}}",
+      addLabels: ["renovate/pypi"]
     }
   ]
 }
