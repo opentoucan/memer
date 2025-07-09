@@ -1,7 +1,7 @@
 ARG UV_DEBIAN=ghcr.io/astral-sh/uv:python3.12-bookworm
 ARG PYTHON_SLIM=docker.io/python:3.13
 
-FROM ${UV_DEBIAN} as builder
+FROM ${UV_DEBIAN} AS builder
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -40,7 +40,7 @@ RUN /scripts/download-model.sh
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-editable
 
-FROM ${PYTHON_SLIM} as final
+FROM ${PYTHON_SLIM} AS final
 
 COPY --from=builder --chown=2048:2048 /app /app
 
