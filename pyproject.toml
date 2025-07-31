@@ -12,7 +12,7 @@ dependencies = [
     "pillow==11.3.0",
     "pydantic==2.11.7",
     "qdrant-client==1.15.0",
-    "regex==2024.11.6",
+    "regex==2025.7.34",
     "aio-pika==9.5.5",
     "torch==2.7.1",
     "torchvision==0.22.1",
