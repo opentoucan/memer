@@ -6,10 +6,10 @@ readme = "README.md"
 requires-python = ">=3.12.0"
 dependencies = [
     "clip",
-    "faststream==0.5.48",
+    "faststream==0.6.2",
     "ftfy==6.3.1",
     "packaging==25.0",
-    "pillow==11.3.0",
+    "pillow==12.0.0",
     "pydantic==2.11.7",
     "qdrant-client==1.15.1",
     "regex==2025.7.34",
@@ -18,12 +18,12 @@ dependencies = [
     "torchvision==0.23.0",
     "tqdm==4.67.1",
     "pydantic-settings>=2.8.0",
-    "sentence-transformers==5.1.0"
+    "sentence-transformers==5.1.2"
 ]
 
 [dependency-groups]
 dev = [
-  "pytest==8.4.1"
+  "pytest==8.4.2"
 ]
 [tool.uv.sources]
 torch = [
