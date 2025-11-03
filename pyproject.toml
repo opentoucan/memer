@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12.0"
 dependencies = [
     "clip",
-    "faststream==0.6.2",
+    "faststream==0.6.3",
     "ftfy==6.3.1",
     "packaging==25.0",
     "pillow==12.0.0",
