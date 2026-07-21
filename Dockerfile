@@ -1,5 +1,5 @@
 ARG UV_DEBIAN=ghcr.io/astral-sh/uv:python3.12-bookworm
-ARG PYTHON_SLIM=docker.io/python:3.13
+ARG PYTHON_SLIM=docker.io/python:3.14
 
 FROM ${UV_DEBIAN} AS builder
 
