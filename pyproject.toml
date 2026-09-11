@@ -16,7 +16,7 @@ dependencies = [
     "aio-pika==9.5.7",
     "torch==2.8.0",
     "torchvision==0.23.0",
-    "tqdm==4.67.1",
+    "tqdm==4.70.1",
     "pydantic-settings>=2.8.0",
     "sentence-transformers==5.1.2"
 ]
